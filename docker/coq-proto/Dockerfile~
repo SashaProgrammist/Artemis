@@ -75,6 +75,12 @@ ENV PATH="$VENV_PATH/bin:/root/.opam/default/bin:$PATH"
 # Создаём символическую ссылку на sertop от имени root
 RUN ln -s /root/.opam/default/bin/sertop /usr/local/bin/sertop
 
+# Создаём рабочую директорию и назначаем её владельцем пользователя `coq`
+RUN mkdir -p /workspace && chown -R coq:coq /workspace
+
+# Возвращаемся к непривилегированному пользователю `coq` для безопасности
+USER coq
+
 # Устанавливаем рабочую директорию
 WORKDIR /workspace
 
